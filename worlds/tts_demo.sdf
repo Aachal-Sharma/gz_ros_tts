@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<!--
+  tts_demo.sdf
+  Gazebo Harmonic world — gz sim format
+  Compatible with: Ubuntu 24.04 + ROS 2 Jazzy + Gazebo Harmonic
+
+  Classic difference:
+    Classic used <world><physics type="ode"> and <include><uri>model://...
+    Harmonic uses <world><physics><ode> and fuel:// or local model paths
+-->
+<sdf version="1.9">
+  <world name="tts_demo">
+
+    <!-- Physics -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <!-- Core Harmonic plugins (NOT gazebo_ros_pkgs) -->
+    <plugin
+      filename="gz-sim-physics-system"
+      name="gz::sim::systems::Physics">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-user-commands-system"
+      name="gz::sim::systems::UserCommands">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-scene-broadcaster-system"
+      name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+
+    <!-- Lighting -->
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Simple robot box — TTS plugin attached here -->
+    <model name="tts_robot">
+      <pose>0 0 0.5 0 0 0</pose>
+
+      <link name="body">
+        <collision name="collision">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material>
+            <ambient>0.2 0.5 0.9 1</ambient>
+            <diffuse>0.2 0.5 0.9 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <!--
+        GzRosTts plugin — gz-sim 8 System plugin format.
+        Classic used filename="libgazebo_ros_tts.so"
+        Harmonic uses filename="gz_ros_tts" (no lib prefix, no .so)
+        gz-plugin finds it via GZ_SIM_SYSTEM_PLUGIN_PATH
+      -->
+      <plugin
+        filename="gz_ros_tts"
+        name="gz_ros_tts::GzRosTts">
+        <topic>/robot/speak</topic>
+        <tts_engine>espeak</tts_engine>
+        <voice>en</voice>
+        <rate>150</rate>
+      </plugin>
+
+    </model>
+
+  </world>
+</sdf>

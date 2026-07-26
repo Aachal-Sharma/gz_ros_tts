@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd"
+            schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>gz_ros_tts</name>
+  <version>1.0.0</version>
+  <description>
+    Text-to-Speech plugin for Gazebo Harmonic (gz-sim 8) with ROS 2 Jazzy.
+    Ubuntu 24.04 only. Zero Gazebo Classic dependencies.
+    Supports espeak-ng, festival, and piper TTS engines.
+  </description>
+
+  <maintainer email="your@email.com">Your Name</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- ROS 2 dependencies -->
+  <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
+
+  <!--
+    Gazebo Harmonic via vendor packages (ROS 2 Jazzy).
+    These REPLACE gazebo_ros_pkgs / gazebo_ros from Classic.
+    No gazebo_ros_pkgs, no gazebo_msgs, no ros_gz_bridge needed
+    for the plugin itself.
+  -->
+  <depend>gz_sim_vendor</depend>
+  <depend>gz_plugin_vendor</depend>
+  <depend>gz_common_vendor</depend>
+
+  <!-- Launch file dependency -->
+  <exec_depend>ros_gz_sim</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
