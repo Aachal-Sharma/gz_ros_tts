@@ -330,5 +330,3 @@ This project is released under the **MIT License**.
 # Acknowledgements
 
 This project extends our previously released **Gazebo ROS Text-to-Speech (TTS) Plugin for Gazebo Classic** to the modern **Gazebo Harmonic** ecosystem. It aims to support researchers and developers working in Human-Robot Interaction (HRI), Physical AI, Embodied AI, Vision-Language-Action (VLA), and next-generation conversational robotic systems.
-
-**Made with ❤️ by Aachal Sharma & Rahul Gupta**
